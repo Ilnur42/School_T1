@@ -1,0 +1,46 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet author="ikharipov" id="06052024_create_book_table">
+        <createTable tableName="books" schemaName="entities">
+            <column name="id" type="uuid"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="year_of_published" type="int"/>
+            <column name="cost" type="int"/>
+            <column name="number_of_pages" type="int"/>
+            <column name="count" type="int"/>
+            <column name="created" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author" type="uuid"/>
+            <column name="book_shop" type="uuid"/>
+        </createTable>
+
+        <addPrimaryKey tableName="books" schemaName="entities" columnNames="id"/>
+
+        <addForeignKeyConstraint baseTableSchemaName="entities"
+                                 baseColumnNames="author"
+                                 baseTableName="books"
+                                 constraintName="fk_books_author"
+                                 referencedTableSchemaName="entities"
+                                 referencedColumnNames="id"
+                                 referencedTableName="authors"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+
+        <addForeignKeyConstraint baseTableSchemaName="entities"
+                                 baseColumnNames="book_shop"
+                                 baseTableName="books"
+                                 constraintName="fk_books_book_shop"
+                                 referencedTableSchemaName="entities"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book_shops"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+</databaseChangeLog>
